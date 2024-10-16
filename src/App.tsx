@@ -13,7 +13,7 @@ function App() {
     // Define an async function to fetch the count
     const fetchCount = async () => {
       try {
-        const response = await fetch('https://the-game-counter-backend.onrender.com/get-count', {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/get-count`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ function App() {
   const handlePlusOne = async () => {
 
     try {
-      const response = await fetch('https://the-game-counter-backend.onrender.com/plus-one', {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/plus-one`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
