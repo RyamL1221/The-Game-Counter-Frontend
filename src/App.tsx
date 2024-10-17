@@ -63,6 +63,31 @@ function App() {
     }
   };
 
+  // Function to handle updating the count by calling the /plus-one endpoint
+  const handleMinusOne = async () => {
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/minus-one`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ count: 0 }),
+      });
+
+      if (!response.ok) {
+        // If response is not ok, throw an error with status
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to update count');
+      }
+
+      const data = await response.json();
+      setCount(data.count); // Update the count state with the new value
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
+
   if (loading) {
     return <div>Loading count...</div>;
   }
@@ -73,7 +98,8 @@ function App() {
   
   return (
     <div> 
-      <button onClick={handlePlusOne}>The Game</button>
+      <button onClick={handlePlusOne}>The Game (+)</button>
+      <button onClick={handleMinusOne}>The Game (-)</button>
       <p>{count}</p>
     </div>
   );
