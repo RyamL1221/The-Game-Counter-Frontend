@@ -53,12 +53,15 @@ function App() {
       if (!response.ok) {
         // If response is not ok, throw an error with status
         const errorData = await response.json();
+        console.log(errorData || 'Failed to update count');
         throw new Error(errorData.error || 'Failed to update count');
       }
 
       const data = await response.json();
       setCount(data.count); // Update the count state with the new value
+      console.log("Updated count to " + data.count);
     } catch (err: any) {
+      console.log(err.message);
       setError(err.message);
     }
   };
@@ -78,12 +81,15 @@ function App() {
       if (!response.ok) {
         // If response is not ok, throw an error with status
         const errorData = await response.json();
+        console.log(errorData || 'Failed to update count');
         throw new Error(errorData.error || 'Failed to update count');
       }
 
       const data = await response.json();
       setCount(data.count); // Update the count state with the new value
+      console.log("Updated count to " + data.count);
     } catch (err: any) {
+      console.log(err.message);
       setError(err.message);
     }
   };
