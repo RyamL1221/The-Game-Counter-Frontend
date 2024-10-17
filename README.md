@@ -1,3 +1,22 @@
+# The Game Counter
+
+Welcome to the Game Counter dev team!
+
+## In order to set up the app locally, you need to:
+
+1. clone the repository `git clone https://github.com/RyamL1221/The-Game-Counter-Frontend`
+2. install dependencies `npm install`
+3. set up the environment variables (make your .env file)
+4. run the app `npm start`
+
+## In order to add features
+
+1. create a branch from the dev branch (instructions follow below)
+2. switch to dev branch `git checkout dev`
+3. create a new branch `git branch <feature-name>` Do not include the <>, it is to show that feature name is a variable and to replace that with the feature name
+4. switch to the new branch `git checkout <feature-name>`
+5. Start coding :)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
