@@ -1,3 +1,12 @@
+import React from 'react';
+
 function Home() {
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "Home"));
+  return (
+    <div>
+      <h1>Home</h1>
+      <p>Welcome to the home page!</p>
+    </div>
+  );
 }
+
+export default Home;
