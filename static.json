@@ -1,7 +1,0 @@
-{
-    "routes": [
-      { "handle": "filesystem" },
-      { "source": "/*", "destination": "/index.html", "status": 200 }
-    ]
-  }
-  
