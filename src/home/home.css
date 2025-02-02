@@ -1,37 +1,115 @@
-.home-container {
-    text-align: center;
+/* Apply border-box to all elements to include padding and border in the element’s total dimensions */
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  /* Global styling for a prettier background */
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    overflow-x: hidden; /* Optional: prevents horizontal scrolling */
+  }
+  
+  /* Container for the landing page */
+  .home-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* Navbar styling */
+  .navbar {
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+  }
+  
+  .navbar-logo h1 {
+    margin: 0;
+    font-size: 1.8rem;
+  }
+  
+  .navbar-links {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .nav-button {
+    background: none;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .nav-button:hover {
+    background-color: #fff;
+    color: #333;
+  }
+  
+  /* Main content styling */
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 2rem;
-    background-color: #f8f9fa;
+    text-align: center;
   }
   
-  .home-title {
-    font-size: 2.5rem;
-    color: #343a40;
-    margin-bottom: 1rem;
+  .header h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
   }
   
-  .home-description {
+  .header p {
     font-size: 1.2rem;
-    color: #6c757d;
-    margin-bottom: 2rem;
+    color: #555;
   }
   
-  .home-button-container {
+  /* Gif section styling */
+  .gif-section {
     margin-top: 2rem;
   }
   
-  .home-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    transition: background-color 0.3s ease;
+  .landing-gif {
+    max-width: 80%;
+    border: 2px solid #333;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
-  .home-button:hover {
-    background-color: #0056b3;
+  /* Footer styling */
+  .footer {
+    background-color: #333;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .footer-nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  .footer-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s;
+  }
+  
+  .footer-link:hover {
+    color: #c3cfe2;
   }
   
