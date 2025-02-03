@@ -1,33 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../ui/navbar';
 import './home.css';
+import Footer from '../ui/footer';
 
 const Home: React.FC = () => {
-  const navigate = useNavigate(); // Hook to navigate between routes
-
-  const handleGetStarted = () => {
-    navigate('/dashboard'); // Redirect to the Dashboard page
-  };
 
   return (
     <div className="home-container">
-      {/* Navbar */}
-      <nav className="navbar">
-        <div className="navbar-logo">
-          <h1>The Game Counter</h1>
-        </div>
-        <div className="navbar-links">
-          <button className="nav-button" onClick={() => navigate('/login')}>
-            Login
-          </button>
-          <button className="nav-button" onClick={() => navigate('/register')}>
-            Register
-          </button>
-          <button className="nav-button" onClick={() => navigate('/dashboard')}>
-            Dashboard
-          </button>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Main Content */}
       <main className="main-content">
@@ -35,8 +16,7 @@ const Home: React.FC = () => {
           <h2>Welcome to The Game Counter!</h2>
           <p>
             This is your one-stop place to keep track of how many times you've lost the game.
-            If you lose the game, that means you're a sigma.
-            Everyone loves a sigma.
+            Remember, if you think about the game... you lose!
           </p>
         </header>
         <section className="gif-section">
@@ -48,14 +28,7 @@ const Home: React.FC = () => {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="footer">
-        <nav className="footer-nav">
-          <a href="/login" className="footer-link">Login</a>
-          <a href="/register" className="footer-link">Register</a>
-          <a href="/dashboard" className="footer-link">Dashboard</a>
-        </nav>
-      </footer>
+      <Footer />
     </div>
   );
 };
