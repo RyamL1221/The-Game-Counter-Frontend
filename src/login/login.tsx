@@ -1,21 +1,20 @@
-// src/components/Register.tsx
-import React, { useState, FormEvent } from 'react';
-import './register.css';
-import { registerUser, RegisterData } from '../util/register';
-import Navbar from '../ui/navbar';
-import Footer from '../ui/footer';
 
-const Register: React.FC = () => {
-  const [formData, setFormData] = useState<RegisterData>({
-    email: '',
-    password: '',
-  });
+import React, { useState, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loginUser, LoginData } from '../util/login';
+import { useAuth } from '../util/auth';
+import './login.css';
+
+const Login: React.FC = () => {
+  const [loginData, setLoginData] = useState<LoginData>({ email: '', password: '' });
   const [message, setMessage] = useState<string>('');
   const [isError, setIsError] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const { setToken } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
+    setLoginData({
+      ...loginData,
       [e.target.name]: e.target.value,
     });
   };
@@ -23,29 +22,30 @@ const Register: React.FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const data = await registerUser(formData);
-      setMessage('Registration successful!');
+      const data = await loginUser(loginData);
+      // Save the JWT in the auth context (and localStorage via our effect).
+      setToken(data.token);
+      setMessage('Login successful!');
       setIsError(false);
-      console.log('Registration successful:', data);
+      // Redirect to a protected route (e.g., a dashboard)
+      navigate('/dashboard');
     } catch (error: any) {
       setMessage(error.message);
       setIsError(true);
-      console.error('Error during registration:', error);
     }
   };
 
   return (
-    <div className="register-container">
-      <Navbar />
-      <h2>Register</h2>
+    <div className="login-container">
+      <h2>Login</h2>
       {message && <p className={`message ${isError ? 'error' : ''}`}>{message}</p>}
-      <form onSubmit={handleSubmit} className="register-form">
+      <form onSubmit={handleSubmit} className="login-form">
         <label htmlFor="email">Email:</label>
         <input
           id="email"
           name="email"
           type="email"
-          value={formData.email}
+          value={loginData.email}
           onChange={handleChange}
           required
         />
@@ -55,16 +55,15 @@ const Register: React.FC = () => {
           id="password"
           name="password"
           type="password"
-          value={formData.password}
+          value={loginData.password}
           onChange={handleChange}
           required
         />
 
-        <button type="submit">Register</button>
+        <button type="submit">Login</button>
       </form>
-      <Footer />
     </div>
   );
 };
 
-export default Register;
+export default Login;
