@@ -2,11 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './home.css';
 
-const Home: React.FC = () => {
+function Home() {
   const navigate = useNavigate(); // Hook to navigate between routes
 
-  const handleGetStarted = () => {
-    navigate('/dashboard'); // Redirect to the Dashboard page
+  const handleNavigation = (page: string) => {
+    navigate(`/${page}`); // Redirect to the Dashboard page
   };
 
   return (
@@ -16,7 +16,7 @@ const Home: React.FC = () => {
         Have you thought about <em>The Game</em>? Keep track of your losses and challenge your friends to see who can go the longest without losing!
       </p>
       <div className="home-button-container">
-        <button onClick={handleGetStarted} className="home-button">
+        <button onClick={() => handleNavigation("dashboard")} className="home-button">
           Get Started
         </button>
       </div>
