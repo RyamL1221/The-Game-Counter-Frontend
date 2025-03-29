@@ -3,7 +3,6 @@ import React, { useState, FormEvent } from 'react';
 import './register.css';
 import { registerUser, RegisterData } from '../util/register';
 import Navbar from '../ui/navbar';
-import Footer from '../ui/footer';
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState<RegisterData>({
@@ -62,7 +61,6 @@ const Register: React.FC = () => {
 
         <button type="submit">Register</button>
       </form>
-      <Footer />
     </div>
   );
 };
