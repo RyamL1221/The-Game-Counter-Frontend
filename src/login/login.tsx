@@ -1,8 +1,9 @@
-
 import React, { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser, LoginData } from '../util/login';
-import { useAuth } from '../util/auth';
+import { loginUser, LoginData } from '../util/login';  // Assuming you have this utility
+import { useAuth } from '../util/auth';  // Assuming you have this auth utility
+import Navbar from '../ui/navbar';  // Navbar import as in Register page
+import Footer from '../ui/footer';  // Footer import as in Register page
 import './login.css';
 
 const Login: React.FC = () => {
@@ -23,12 +24,10 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       const data = await loginUser(loginData);
-      // Save the JWT in the auth context (and localStorage via our effect).
-      setToken(data.token);
+      setToken(data.token);  // Save the JWT token in context and localStorage
       setMessage('Login successful!');
       setIsError(false);
-      // Redirect to a protected route (e.g., a dashboard)
-      navigate('/dashboard');
+      navigate('/dashboard');  // Redirect to the dashboard after login
     } catch (error: any) {
       setMessage(error.message);
       setIsError(true);
@@ -36,32 +35,47 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      {message && <p className={`message ${isError ? 'error' : ''}`}>{message}</p>}
-      <form onSubmit={handleSubmit} className="login-form">
-        <label htmlFor="email">Email:</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          value={loginData.email}
-          onChange={handleChange}
-          required
-        />
+    <div className="home-container">  {/* Match structure with Register page */}
+      <Navbar />  {/* Same Navbar from Register page */}
 
-        <label htmlFor="password">Password:</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          value={loginData.password}
-          onChange={handleChange}
-          required
-        />
+      <main className="main-content">
+        <header className="header">
+          <h1 className="login-glow">Login</h1>
+          <p>Please enter your credentials to log in.</p>
+          {message && (
+            <p className={`message ${isError ? 'error' : ''}`}>
+              {message}
+            </p>
+          )}
+          <form onSubmit={handleSubmit} className="login-form">
+            <label htmlFor="email">Email:</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              value={loginData.email}
+              onChange={handleChange}
+              required
+            />
 
-        <button type="submit">Login</button>
-      </form>
+            <label htmlFor="password">Password:</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              value={loginData.password}
+              onChange={handleChange}
+              required
+            />
+
+            <button type="submit" className="login-button">
+              Login
+            </button>
+          </form>
+        </header>
+      </main>
+
+      <Footer />  {/* Same Footer from Register page */}
     </div>
   );
 };

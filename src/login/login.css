@@ -1,49 +1,97 @@
+/* Outer page container */
 .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 2rem;
-  }
-  
-  .login-form {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-  }
-  
-  .login-form label {
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-  }
-  
-  .login-form input {
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .login-form button {
-    padding: 0.75rem;
-    border: none;
-    background-color: #008cba;
-    color: #fff;
-    font-size: 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .login-form button:hover {
-    background-color: #005f75;
-  }
-  
-  .message {
-    margin-bottom: 1rem;
-    font-size: 1rem;
-  }
-  
-  .message.error {
-    color: red;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem;
+}
+
+/* New CSS class for the login button, similar to register-button */
+.login-button {
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: 1px solid #305cc9;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 500;
+  box-shadow: 0 0 10px #305cc9;
+}
+
+.login-button:hover {
+  background-color: rgb(138, 157, 207);
+  box-shadow: 0 0 15px #305cc9;
+  transform: translateY(-2px);
+}
+
+/* Container for the login form with a similar translucent and blurred background */
+.login-container {
+  width: 100%;
+  max-width: 600px;
+  background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent dark background */
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border: 2px solid rgba(169, 169, 169, 0.5); /* Gray translucent border */
+  border-radius: 8px;
+  margin: 2rem auto;
+  position: relative;
+}
+
+/* Gradient border pseudo-element (mirrors the navbar style) */
+.login-container::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(120deg, rgb(53, 131, 255), rgb(255, 255, 255), rgb(53, 131, 255));
+  filter: blur(4px) brightness(0.1);
+  z-index: -1;
+  border-radius: inherit;
+}
+
+/* Form styling with a slightly darker inner background */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: left;
+}
+
+/* Label styling with similar font treatment */
+.login-form label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Translucent input boxes with clear borders and matching font */
+.login-form input {
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-family: 'VT323', monospace;
+}
+
+/* New CSS class for glowing header similar to the home page footer */
+.login-glow {
+  color: #fff;
+  text-shadow: 0 0 10px rgba(195, 207, 226, 0.8);
+  transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+.login-glow:hover {
+  color: #c3cfe2;
+  text-shadow: 0 0 15px rgba(195, 207, 226, 1);
+}

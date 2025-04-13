@@ -1,115 +1,238 @@
-/* Apply border-box to all elements to include padding and border in the element’s total dimensions */
+/* Apply border-box to all elements to include padding and border in the element's total dimensions */
 *, *::before, *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=VT323&display=swap');
+
+/* Global styling for a dark translucent background with wallpaper */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  /* Layer a dark gradient over the wallpaper for a translucent effect */
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./wallpaper.webp') no-repeat center center fixed;
+  background-size: cover;
+  overflow-x: hidden;
+}
+
+/* Container for the landing page */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Navbar styling with a frosted glass effect */
+/* Navbar styling with a grey translucent background and glow effect */
+.navbar {
+  position: relative;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Dark translucent background */
+  border: 2px solid transparent; /* Transparent border to show the gradient */
+  backdrop-filter: blur(10px) invert(1); /* Blur & invert what's behind */
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Pseudo-element for gradient border */
+.navbar::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(120deg, rgb(53, 131, 255), rgb(255, 255, 255), rgb(53, 131, 255));
+  filter: blur(4px) brightness(0.1);/* Slight blur for a smoother gradient border */
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.navbar-logo h1,
+.navbar-links a {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.navbar-logo h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-button {
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Main content styling */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Title styling */
+.title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2rem;
+  text-align: center;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  position: relative;
+  background: linear-gradient(to right, #ebebeb 0%, #f3d4f9 50%, #ebebeb 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s linear infinite;
+  border-bottom: 2px solid rgba(241, 246, 246, 0.3);
+  padding-bottom: 10px;
+  cursor: pointer;
+  transition: font-family 0.3s ease;
+}
+
+.title:hover {
+  font-family: 'VT323', monospace;
+  text-shadow: 
+    0 0 2px rgb(138, 157, 207),
+    0 0 4px #305cc9,
+    0 0 8px #305cc9;
+}
+
+@keyframes shine {
+  from {
+    background-position: -100% center;
   }
-  
-  /* Global styling for a prettier background */
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-    overflow-x: hidden; /* Optional: prevents horizontal scrolling */
+  to {
+    background-position: 100% center;
   }
-  
-  /* Container for the landing page */
-  .home-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+}
+
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
   }
-  
-  /* Navbar styling */
-  .navbar {
-    width: 100%;
-    background-color: #333;
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
+  20% {
+    transform: translate(-2px, 2px);
   }
-  
-  .navbar-logo h1 {
-    margin: 0;
-    font-size: 1.8rem;
+  40% {
+    transform: translate(-2px, -2px);
   }
-  
-  .navbar-links {
-    display: flex;
-    gap: 1rem;
+  60% {
+    transform: translate(2px, 2px);
   }
-  
-  .nav-button {
-    background: none;
-    border: 1px solid #fff;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+  80% {
+    transform: translate(2px, -2px);
   }
-  
-  .nav-button:hover {
-    background-color: #fff;
-    color: #333;
+  100% {
+    transform: translate(0);
   }
-  
-  /* Main content styling */
-  .main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    text-align: center;
-  }
-  
-  .header h2 {
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 0.5rem;
-  }
-  
-  .header p {
-    font-size: 1.2rem;
-    color: #555;
-  }
-  
-  /* Gif section styling */
-  .gif-section {
-    margin-top: 2rem;
-  }
-  
-  .landing-gif {
-    max-width: 80%;
-    border: 2px solid #333;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Footer styling */
-  .footer {
-    background-color: #333;
-    padding: 1rem;
-    text-align: center;
-  }
-  
-  .footer-nav {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-  }
-  
-  .footer-link {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s;
-  }
-  
-  .footer-link:hover {
-    color: #c3cfe2;
-  }
-  
+}
+
+/* Auth buttons styling */
+.auth-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.auth-button {
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: 1px solid #305cc9;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1.2rem; /* Ensure the button text size is large enough */
+  font-family: 'Orbitron', sans-serif; /* Explicitly set the font-family for buttons */
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px #305cc9;
+}
+
+.auth-button:hover {
+  background-color: rgb(138, 157, 207);
+  box-shadow: 0 0 15px #305cc9;
+  transform: translateY(-2px);
+}
+
+.header p {
+  font-size: 1.2rem;
+  color: #ccc;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Header styling */
+.header {
+  background-color: rgba(0, 0, 0, 0.4); /* semi-transparent */
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  text-align: center;
+  border: 2px solid rgba(169, 169, 169, 0.5); /* Gray translucent border */
+  border-radius: 8px; /* Optional: Add rounded corners to the border */
+}
+
+
+/* Footer styling with a frosted glass effect */
+.footer {
+  background-color: rgba(0, 0, 0, 0.4); /* semi-transparent */
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding: 1rem;
+  text-align: center;
+  border: 2px solid rgba(169, 169, 169, 0.5); /* Gray translucent border */
+  border-radius: 8px; /* Optional: Add rounded corners to the border */
+}
+
+
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.footer-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #c3cfe2;
+  text-shadow: 0 0 10px rgba(195, 207, 226, 0.8);
+}

@@ -3,6 +3,7 @@ import React, { useState, FormEvent } from 'react';
 import './register.css';
 import { registerUser, RegisterData } from '../util/register';
 import Navbar from '../ui/navbar';
+import Footer from '../ui/footer'; // or wherever your footer file is
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState<RegisterData>({
@@ -34,33 +35,46 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="register-container">
+    <div className="home-container">
       <Navbar />
-      <h2>Register</h2>
-      {message && <p className={`message ${isError ? 'error' : ''}`}>{message}</p>}
-      <form onSubmit={handleSubmit} className="register-form">
-        <label htmlFor="email">Email:</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
 
-        <label htmlFor="password">Password:</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
+      <main className="main-content">
+        <header className="header">
+        <h1 className="register-glow">Register</h1>
+        <p>Please fill in the details below to create an account.</p>
+          {message && (
+            <p className={`message ${isError ? 'error' : ''}`}>
+              {message}
+            </p>
+          )}
+          <form onSubmit={handleSubmit} className="register-form">
+            <label htmlFor="email">Email:</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
 
-        <button type="submit">Register</button>
-      </form>
+            <label htmlFor="password">Password:</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+
+            <button type="submit" className="auth-button">
+              Register
+            </button>
+          </form>
+        </header>
+      </main>
+      <Footer />
     </div>
   );
 };
