@@ -3,7 +3,7 @@ import React, { useState, FormEvent } from 'react';
 import './register.css';
 import { registerUser, RegisterData } from '../util/register';
 import Navbar from '../ui/navbar';
-import Footer from '../ui/footer';
+import Footer from '../ui/footer'; // or wherever your footer file is
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState<RegisterData>({
@@ -74,7 +74,6 @@ const Register: React.FC = () => {
           </form>
         </header>
       </main>
-
       <Footer />
     </div>
   );
