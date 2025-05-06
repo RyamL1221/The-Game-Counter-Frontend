@@ -9,7 +9,7 @@ Welcome to the Game Counter dev team!
 3. Install npm `npm install -g npm`
 4. clone the repository `git clone https://github.com/RyamL1221/The-Game-Counter-Frontend`
 5. install dependencies `npm install`
-6. set up the environment variables (make your .env file)
+6. set up the environment variables (make your .env file in root folder)
 7. run the app `npm start`
 
 ## In order to add features
