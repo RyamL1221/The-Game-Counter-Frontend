@@ -5,7 +5,6 @@ import Home from './home/home';
 import Register from './register/register';
 import { AuthProvider } from './util/auth';
 import Login from './login/login';
-import Footer from './ui/footer';
 import PrivateRoute from './util/private-route';
 
 function App() {

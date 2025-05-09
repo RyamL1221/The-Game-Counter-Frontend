@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { loginUser, LoginData } from '../util/login';  // Assuming you have this utility
 import { useAuth } from '../util/auth';  // Assuming you have this auth utility
 import Navbar from '../ui/navbar';  // Navbar import as in Register page
-import Footer from '../ui/footer';  // Footer import as in Register page
 import './login.css';
 
 const Login: React.FC = () => {
@@ -75,7 +74,6 @@ const Login: React.FC = () => {
         </header>
       </main>
 
-      <Footer />  {/* Same Footer from Register page */}
     </div>
   );
 };
