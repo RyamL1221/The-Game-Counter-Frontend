@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../ui/navbar';
 import './home.css';
-import Footer from '../ui/footer';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -70,8 +69,6 @@ const Home: React.FC = () => {
           </p>
         </header>
       </main>
-
-      <Footer />
     </div>
   );
 };

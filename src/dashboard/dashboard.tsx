@@ -77,6 +77,31 @@ function Dashboard() {
     }
   };
 
+  // Function to handle updating the count by calling the /minus-one endpoint
+  const handleMinusOne = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/minus-one`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ auth_token: token, email: email }), 
+      });
+
+      if (!response.ok) {
+        // If response is not ok, throw an error with status
+        const errorData = await response.json();
+        console.log(errorData)
+        throw new Error(errorData.error || 'Failed to update count');
+      }
+
+      const data = await response.json();
+      setCount(data.count); // Update the count state with the new value
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
+
   if (loading) {
     return <div>Loading count...</div>;
   }
@@ -90,6 +115,7 @@ function Dashboard() {
       <p>{userData?.email}</p>
       <p>{count}</p>
       <button onClick={handlePlusOne}>The Game (+)</button>
+      <button onClick={handleMinusOne}>The Game (-)</button>
     </div>
   );
 }
