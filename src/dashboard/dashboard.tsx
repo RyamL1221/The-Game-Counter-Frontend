@@ -16,6 +16,16 @@ function Dashboard() {
   const [loading, setLoading] = useState(true); // State to handle loading
   const [error, setError] = useState<string | null>(null); // State to handle errors
 
+  // data analysis states
+  const [n, setN] = useState<number | null>(null); // State to hold n value
+  const [mean, setMean] = useState<number | null>(null); // State to hold mean value
+  const [median, setMedian] = useState<number | null>(null); // State to hold median value
+  const [stdDev, setStdDev] = useState<number | null>(null); // State to hold standard deviation value
+  const [variance, setVariance] = useState<number | null>(null); // State to hold variance value
+  const [min, setMin] = useState<number | null>(null); // State to hold minimum value
+  const [max, setMax] = useState<number | null>(null); // State to hold maximum value
+  
+
   useEffect(() => {
     // Only attempt to fetch if both token and email are available.
     if (!token || !email) {
@@ -51,6 +61,44 @@ function Dashboard() {
 
     fetchUserData();
   }, [email]);
+
+useEffect(() => {
+  // define the fetch function once
+  const fetchDataAnalysis = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/data-analysis`,
+        { method: 'GET' }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log(errorData);
+        throw new Error(errorData.error || 'Failed to fetch data analysis');
+      }
+
+      const data = await response.json();
+      setN(data?.n);
+      setMean(data?.mean);
+      setMedian(data?.median);
+      setStdDev(data?.std_dev);
+      setVariance(data?.variance);
+      setMin(data?.min);
+      setMax(data?.max);
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
+
+  // initial fetch
+  fetchDataAnalysis();
+
+  // then poll every 5 seconds
+  const intervalId = setInterval(fetchDataAnalysis, 5000);
+
+  // cleanup on unmount
+  return () => clearInterval(intervalId);
+}, []); // run only once on mount
 
   // Function to handle updating the count by calling the /plus-one endpoint
   const handlePlusOne = async () => {
@@ -111,11 +159,53 @@ function Dashboard() {
   }
   
   return (
-    <div> 
-      <p>{userData?.email}</p>
-      <p>{count}</p>
-      <button onClick={handlePlusOne}>The Game (+)</button>
-      <button onClick={handleMinusOne}>The Game (-)</button>
+    <div className="dashboard">
+      <h2>Welcome, {userData?.email}</h2>
+      <div className="count-controls">
+        <button onClick={handleMinusOne}>–</button>
+        <span className="count">{count}</span>
+        <button onClick={handlePlusOne}>+</button>
+      </div>
+
+      <h3>Data Across All Users</h3>
+      <table className="analysis-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sample Size (n)</td>
+            <td>{n ?? '—'}</td>
+          </tr>
+          <tr>
+            <td>Mean</td>
+            <td>{mean ?? '—'}</td>
+          </tr>
+          <tr>
+            <td>Median</td>
+            <td>{median ?? '—'}</td>
+          </tr>
+          <tr>
+            <td>Std. Deviation</td>
+            <td>{stdDev ?? '—'}</td>
+          </tr>
+          <tr>
+            <td>Variance</td>
+            <td>{variance ?? '—'}</td>
+          </tr>
+          <tr>
+            <td>Min</td>
+            <td>{min ?? '—'}</td>
+          </tr>
+          <tr>
+            <td>Max</td>
+            <td>{max ?? '—'}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }
