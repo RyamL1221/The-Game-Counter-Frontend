@@ -151,11 +151,11 @@ useEffect(() => {
   };
 
   if (loading) {
-    return <div>Loading count...</div>;
+    return <div className="status-overlay loading">Loading…</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="status-overlay error-message">Error: {error}</div>;
   }
   
   return (

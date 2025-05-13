@@ -107,3 +107,20 @@
   font-family: 'Orbitron', sans-serif;
 }
 
+/* Make the security-question dropdown match the size of your inputs */
+.register-form select {
+  width: 100%;           /* full width of form column */
+  padding: 0.75rem;      /* same vertical padding as your inputs */
+  font-size: 1rem;       /* match input text size */
+  margin-bottom: 1rem;   /* same spacing */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-family: 'VT323', monospace;
+}
+
+.register-form select option {
+  background-color: #222; /* dark menu background */
+  color: #fff;            /* white option text */
+}

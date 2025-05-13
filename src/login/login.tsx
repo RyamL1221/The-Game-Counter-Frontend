@@ -1,7 +1,8 @@
 import React, { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser, LoginData } from '../util/login';  // Assuming you have this utility
-import { useAuth } from '../util/auth';  // Assuming you have this auth utility
+import { loginUser, LoginData } from '../util/login'; 
+import { useAuth } from '../util/auth'; 
+import { Navigate } from 'react-router-dom';  // For redirection
 import Navbar from '../ui/navbar';  // Navbar import as in Register page
 import './login.css';
 
@@ -11,6 +12,14 @@ const Login: React.FC = () => {
   const [isError, setIsError] = useState<boolean>(false);
   const navigate = useNavigate();
   const { setToken } = useAuth();
+
+  const { token } = useAuth();  // Get token from auth context
+  // if user is already logged in, redirect to dashboard
+  if (token) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+ 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginData({
