@@ -5,8 +5,8 @@ import Home from './home/home';
 import Register from './register/register';
 import { AuthProvider } from './util/auth';
 import Login from './login/login';
-import Footer from './ui/footer';
 import PrivateRoute from './util/private-route';
+import ForgotPassword from './forgot-password/ForgotPassword';
 
 function App() {
   return (
@@ -24,6 +24,8 @@ function App() {
             }
           />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          {/* Redirect any unknown routes to the home page */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

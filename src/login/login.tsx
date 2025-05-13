@@ -1,16 +1,23 @@
-
+// src/login/Login.tsx
 import React, { useState, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { loginUser, LoginData } from '../util/login';
 import { useAuth } from '../util/auth';
+import Navbar from '../ui/navbar';
 import './login.css';
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
+  const { token, setToken } = useAuth();
   const [loginData, setLoginData] = useState<LoginData>({ email: '', password: '' });
   const [message, setMessage] = useState<string>('');
   const [isError, setIsError] = useState<boolean>(false);
-  const navigate = useNavigate();
-  const { setToken } = useAuth();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // If already logged in, redirect to dashboard
+  if (token) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginData({
@@ -21,47 +28,77 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setMessage('');
+    setIsError(false);
+    setLoading(true);
+
     try {
       const data = await loginUser(loginData);
-      // Save the JWT in the auth context (and localStorage via our effect).
       setToken(data.token);
       setMessage('Login successful!');
-      setIsError(false);
-      // Redirect to a protected route (e.g., a dashboard)
       navigate('/dashboard');
     } catch (error: any) {
       setMessage(error.message);
       setIsError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      {message && <p className={`message ${isError ? 'error' : ''}`}>{message}</p>}
-      <form onSubmit={handleSubmit} className="login-form">
-        <label htmlFor="email">Email:</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          value={loginData.email}
-          onChange={handleChange}
-          required
-        />
+    <div className="home-container">
+      <Navbar />
 
-        <label htmlFor="password">Password:</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          value={loginData.password}
-          onChange={handleChange}
-          required
-        />
+      <main className="main-content">
+        <header className="header">
+          <h1 className="login-glow">Login</h1>
+          <p>Please enter your credentials to log in.</p>
 
-        <button type="submit">Login</button>
-      </form>
+          {message && (
+            <p className={`message ${isError ? 'error' : 'success'}`}>{message}</p>
+          )}
+
+          <form onSubmit={handleSubmit} className="login-form">
+            <label htmlFor="email">Email:</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              value={loginData.email}
+              onChange={handleChange}
+              required
+              disabled={loading}
+            />
+
+            <label htmlFor="password">Password:</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              value={loginData.password}
+              onChange={handleChange}
+              required
+              disabled={loading}
+            />
+
+            <button
+              type="submit"
+              className="login-button"
+              disabled={loading}
+            >
+              {loading ? 'Logging in...' : 'Login'}
+            </button>
+          </form>
+
+          {/* Forgot Password Link */}
+          <p
+            className="forgot-password-link"
+            onClick={() => navigate('/forgot-password')}
+          >
+            Forgot Password?
+          </p>
+        </header>
+      </main>
     </div>
   );
 };
