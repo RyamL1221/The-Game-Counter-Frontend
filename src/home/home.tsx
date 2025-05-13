@@ -1,44 +1,31 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../ui/navbar';
+import { useAuth } from '../util/auth';
 import './home.css';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth();
   const [titleText, setTitleText] = useState("The Game Counter");
   const [isMatrixActive, setIsMatrixActive] = useState(false);
-  
-  const handleLogin = () => {
-    navigate('/login');
-  };
-
-  const handleRegister = () => {
-    navigate('/register');
-  };
 
   // Matrix effect on hover
   const startMatrixEffect = () => {
     if (isMatrixActive) return;
-    
     setIsMatrixActive(true);
-    
     const originalText = "The Game Counter";
     const characters = "10";
     let interval: ReturnType<typeof setInterval>;
-    
+
     interval = setInterval(() => {
       const randomText = originalText
         .split('')
-        .map(char => {
-          if (char === ' ') return ' ';
-          return characters.charAt(Math.floor(Math.random() * characters.length));
-        })
+        .map(char => (char === ' ' ? ' ' : characters.charAt(Math.floor(Math.random() * characters.length))))
         .join('');
-      
       setTitleText(randomText);
     }, 100);
-    
-    // Clean up on mouse leave
+
     setTimeout(() => {
       clearInterval(interval);
       setTitleText(originalText);
@@ -50,19 +37,40 @@ const Home: React.FC = () => {
     <div className="home-container">
       <Navbar />
 
-      {/* Main Content */}
       <main className="main-content">
         <header className="header">
-          <h1 
-            className="title" 
-            onMouseEnter={startMatrixEffect}
-          >
+          <h1 className="title" onMouseEnter={startMatrixEffect}>
             {titleText}
           </h1>
+
           <div className="auth-buttons">
-            <button onClick={handleLogin} className="auth-button">Login</button>
-            <button onClick={handleRegister} className="auth-button">Register</button>
+            {isAuthenticated ? (
+              <>
+                <button onClick={() => navigate('/dashboard')} className="auth-button">
+                  Dashboard
+                </button>
+                <button
+                  onClick={() => {
+                    logout();
+                    navigate('/login');
+                  }}
+                  className="auth-button"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <button onClick={() => navigate('/login')} className="auth-button">
+                  Login
+                </button>
+                <button onClick={() => navigate('/register')} className="auth-button">
+                  Register
+                </button>
+              </>
+            )}
           </div>
+
           <p>
             This is your one-stop place to keep track of how many times you've lost the game.
             Remember, if you think about the game... you lose!
