@@ -69,8 +69,6 @@ const Home: React.FC = () => {
           </p>
         </header>
       </main>
-
-      <Footer />
     </div>
   );
 };
