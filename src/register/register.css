@@ -133,3 +133,28 @@
   margin-bottom: 1.5rem;
   font-family: 'Orbitron', sans-serif;
 }
+
+/* Base styling for all messages */
+.message {
+  color: #ddd;
+  font-size: 1.2rem;              /* larger text */
+  text-align: center;            
+  margin: 1rem 0;
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Error messages */
+.message.error {
+  color: #f55;                    /* bright red */
+  background: rgba(255, 0, 0, 0.1); /* subtle red background */
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+/* Success messages */
+.message.success {
+  color: #6f6;                    /* bright green */
+  background: rgba(0, 255, 0, 0.1); /* subtle green background */
+  padding: 0.5rem;
+  border-radius: 4px;
+}

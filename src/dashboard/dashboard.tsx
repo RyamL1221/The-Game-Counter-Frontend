@@ -1,8 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './dashboard.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../util/auth';
+import Navbar from '../ui/navbar';
 
 interface UserData {
   email: string;
@@ -15,6 +16,7 @@ function Dashboard() {
   const [userData, setUserData] = useState<UserData | null>(null); // State to hold user data
   const [loading, setLoading] = useState(true); // State to handle loading
   const [error, setError] = useState<string | null>(null); // State to handle errors
+  const [fastClickMsg, setFastClickMsg] = useState<string | null>(null);
 
   // data analysis states
   const [n, setN] = useState<number | null>(null); // State to hold n value
@@ -25,6 +27,9 @@ function Dashboard() {
   const [min, setMin] = useState<number | null>(null); // State to hold minimum value
   const [max, setMax] = useState<number | null>(null); // State to hold maximum value
   
+  // Ref to store timestamp of last plus/minus action
+  const lastActionRef = useRef<number>(0);
+
 
   useEffect(() => {
     // Only attempt to fetch if both token and email are available.
@@ -100,55 +105,39 @@ useEffect(() => {
   return () => clearInterval(intervalId);
 }, []); // run only once on mount
 
-  // Function to handle updating the count by calling the /plus-one endpoint
-  const handlePlusOne = async () => {
+ // Throttle helper
+  const throttleAction = async (endpoint: 'plus-one' | 'minus-one') => {
+    const now = Date.now();
+    if (now - lastActionRef.current < 5000) {
+      setFastClickMsg('Please wait 5 seconds before updating again.');
+      setTimeout(() => setFastClickMsg(null), 3000);
+      return;
+    }
+    lastActionRef.current = now;
+    setFastClickMsg(null);
+
     try {
-      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/plus-one`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ auth_token: token, email: email }), 
-      });
-
-      if (!response.ok) {
-        // If response is not ok, throw an error with status
-        const errorData = await response.json();
-        console.log(errorData)
-        throw new Error(errorData.error || 'Failed to update count');
+      const res = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/${endpoint}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ auth_token: token, email }),
+        }
+      );
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Update failed');
       }
-
-      const data = await response.json();
-      setCount(data.count); // Update the count state with the new value
-    } catch (err: any) {
-      setError(err.message);
+      const data = await res.json();
+      setCount(data.count);
+    } catch (e: any) {
+      setError(e.message);
     }
   };
 
-  // Function to handle updating the count by calling the /minus-one endpoint
-  const handleMinusOne = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/minus-one`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ auth_token: token, email: email }), 
-      });
-
-      if (!response.ok) {
-        // If response is not ok, throw an error with status
-        const errorData = await response.json();
-        console.log(errorData)
-        throw new Error(errorData.error || 'Failed to update count');
-      }
-
-      const data = await response.json();
-      setCount(data.count); // Update the count state with the new value
-    } catch (err: any) {
-      setError(err.message);
-    }
-  };
+  const handlePlusOne = () => throttleAction('plus-one');
+  const handleMinusOne = () => throttleAction('minus-one');
 
   if (loading) {
     return <div className="status-overlay loading">Loading…</div>;
@@ -160,7 +149,11 @@ useEffect(() => {
   
   return (
     <div className="dashboard">
+      <Navbar />
       <h2>Welcome, {userData?.email}</h2>
+      {fastClickMsg && (
+        <div className="fast-click-message">{fastClickMsg}</div>
+      )}
       <div className="count-controls">
         <button onClick={handleMinusOne}>–</button>
         <span className="count">{count}</span>
