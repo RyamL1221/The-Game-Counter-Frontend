@@ -1,4 +1,3 @@
-// src/components/Register.tsx
 import React, { useState, FormEvent, ChangeEvent } from 'react';
 import './register.css';
 import { registerUser, RegisterData } from '../util/register';
@@ -27,6 +26,7 @@ const Register: React.FC = () => {
   });
   const [message, setMessage] = useState<string>('');
   const [isError, setIsError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -39,6 +39,9 @@ const Register: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setMessage('');
+    setIsError(false);
+    setLoading(true);
     try {
       const data = await registerUser(formData);
       setMessage('Registration successful!');
@@ -48,6 +51,8 @@ const Register: React.FC = () => {
       setMessage(error.message);
       setIsError(true);
       console.error('Error during registration:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,7 +61,7 @@ const Register: React.FC = () => {
       <Navbar />
       <div className="register-container">
         <h1 className="register-glow">Register</h1>
-        <p>Please fill in the details below to create an account.</p>
+        <p className="intro-text">Please fill in the details below to create an account.</p>
 
         {message && (
           <p className={`message ${isError ? 'error' : ''}`}>
@@ -73,6 +78,7 @@ const Register: React.FC = () => {
             value={formData.email}
             onChange={handleChange}
             required
+            disabled={loading}
           />
 
           <label htmlFor="password">Password:</label>
@@ -83,6 +89,7 @@ const Register: React.FC = () => {
             value={formData.password}
             onChange={handleChange}
             required
+            disabled={loading}
           />
 
           <label htmlFor="security_question">Security Question:</label>
@@ -92,6 +99,7 @@ const Register: React.FC = () => {
             value={formData.security_question}
             onChange={handleChange}
             required
+            disabled={loading}
           >
             <option value="" disabled>
               -- Select a question --
@@ -111,10 +119,11 @@ const Register: React.FC = () => {
             value={formData.security_answer}
             onChange={handleChange}
             required
+            disabled={loading}
           />
 
-          <button type="submit" className="auth-button">
-            Register
+          <button type="submit" className="auth-button" disabled={loading}>
+            {loading ? 'Registering...' : 'Register'}
           </button>
         </form>
       </div>
