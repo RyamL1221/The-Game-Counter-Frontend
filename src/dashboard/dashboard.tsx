@@ -148,8 +148,9 @@ useEffect(() => {
   }
   
   return (
+    <>    
+    <Navbar />
     <div className="dashboard">
-      <Navbar />
       <h2>Welcome, {userData?.email}</h2>
       {fastClickMsg && (
         <div className="fast-click-message">{fastClickMsg}</div>
@@ -200,6 +201,7 @@ useEffect(() => {
         </tbody>
       </table>
     </div>
+    </>
   );
 }
 
