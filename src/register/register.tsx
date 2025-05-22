@@ -57,7 +57,8 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="register-page">
+
       <Navbar />
       <div className="register-container">
         <h1 className="register-glow">Register</h1>
